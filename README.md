@@ -53,12 +53,12 @@ The result: you get a free, local API endpoint at `http://127.0.0.1:3456/v1/chat
 |---|----------|------|--------|----------|
 | 1 | **DeepSeek** | 🐋 | `deepseek-chat` (64k), `deepseek-reasoner` (64k, reasoning) | chat.deepseek.com |
 | 2 | **Claude** | 🟠 | `claude-sonnet-4-6` (195k), `claude-opus-4-6` (195k, reasoning), `claude-haiku-4-6` (195k) | claude.ai |
-| 3 | **ChatGPT** | 🟢 | `gpt-4o` (128k), `gpt-4-turbo` (128k), `gpt-4o-mini` (128k) | chatgpt.com |
-| 4 | **Gemini** | 💎 | `gemini-2.5-pro` (1M), `gemini-2.0-flash` (1M), `gemini-2.0-pro` (1M) | gemini.google.com |
-| 5 | **Grok** | ❌ | `grok-3` (128k), `grok-3-mini` (128k) | grok.com |
+| 3 | **ChatGPT** | ⚫ | `gpt-4o` (128k), `gpt-4-turbo` (128k), `gpt-4o-mini` (128k) | chatgpt.com |
+| 4 | **Gemini** | ✴️ | `gemini-2.5-pro` (1M), `gemini-2.0-flash` (1M), `gemini-2.0-pro` (1M) | gemini.google.com |
+| 5 | **Grok** | ⬛ | `grok-3` (128k), `grok-3-mini` (128k) | grok.com |
 | 6 | **Kimi** | 🌙 | `kimi-latest` (128k), `moonshot-v1-8k`, `moonshot-v1-32k`, `moonshot-v1-128k` | kimi.moonshot.cn |
-| 7 | **Qwen International** | 🔮 | `qwen3.5-plus` (131k), `qwen3.5-turbo` (131k), `qwen-max` (32k), `qwen-plus` (131k) | chat.qwen.ai |
-| 8 | **Qwen China** | 🔮 | `qwen3.5-plus` (131k), `qwen3.5-turbo` (131k) | qianwen.com |
+| 7 | **Qwen International** | ✨ | `qwen3.5-plus` (131k), `qwen3.5-turbo` (131k), `qwen-max` (32k), `qwen-plus` (131k) | chat.qwen.ai |
+| 8 | **Qwen China** | ✨ | `qwen3.5-plus` (131k), `qwen3.5-turbo` (131k) | qianwen.com |
 | 9 | **GLM (智谱清言)** | 🧠 | `glm-4-plus` (128k), `glm-4-think` (128k, reasoning) | chatglm.cn |
 | 10 | **GLM International** | 🧠 | `glm-4-plus` (128k), `glm-4-think` (128k, reasoning) | chat.z.ai |
 | 11 | **Doubao** | 🤖 | `doubao-seed-2.0` (128k), `doubao-pro-256k` (256k) | doubao.com |
