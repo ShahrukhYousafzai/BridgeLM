@@ -23,7 +23,7 @@ const PROVIDERS = [
     models: [{ id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', ctx: 1000 }, { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', ctx: 1000 }, { id: 'gemini-2.0-pro', name: 'Gemini 2.0 Pro', ctx: 1000 }] },
   { id: 'grok', name: 'Grok Web', url: 'https://grok.com', icon: '⬛', color: '#1DA1F2',
     models: [{ id: 'grok-3', name: 'Grok 3', ctx: 128 }, { id: 'grok-3-mini', name: 'Grok 3 Mini', ctx: 128 }] },
-  { id: 'kimi', name: 'Kimi Web', url: 'https://kimi.moonshot.cn', icon: '🌙', color: '#FF6B35',
+  { id: 'kimi', name: 'Kimi Web', url: 'https://kimi.com', icon: '🌙', color: '#FF6B35',
     models: [{ id: 'kimi-latest', name: 'Kimi Latest', ctx: 128 }, { id: 'moonshot-v1-8k', name: 'Moonshot 8K', ctx: 8 }, { id: 'moonshot-v1-32k', name: 'Moonshot 32K', ctx: 32 }, { id: 'moonshot-v1-128k', name: 'Moonshot 128K', ctx: 128 }] },
   { id: 'qwen', name: 'Qwen International', url: 'https://chat.qwen.ai', icon: '✨', color: '#FF6A00',
     models: [{ id: 'qwen3.5-plus', name: 'Qwen 3.5 Plus', ctx: 131 }, { id: 'qwen3.5-turbo', name: 'Qwen 3.5 Turbo', ctx: 131 }, { id: 'qwen-max', name: 'Qwen Max', ctx: 32 }] },

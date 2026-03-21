@@ -9,7 +9,7 @@ import type {
   ChatCompletionChunk,
   ChatCompletionMessage,
   StreamCallback,
-} from '../../gateway/types';
+} from '../gateway/types';
 
 // Utility to create a standard chat completion response
 export function createResponse(

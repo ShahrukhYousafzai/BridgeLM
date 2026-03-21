@@ -23,6 +23,9 @@ if (typeof window !== 'undefined' && !(window as any).api) {
     getStatus: () => Promise.resolve({ gatewayPort: 3456, gatewayApiKey: 'fg-dev', providerCount: 0, providers: {} }),
     openUrl: (url: string) => { window.open(url, '_blank'); return Promise.resolve(true); },
     listModels: () => Promise.resolve([]),
+    startAutoRefresh: () => Promise.resolve(true),
+    stopAutoRefresh: () => Promise.resolve(true),
+    getAutoRefreshStatus: () => Promise.resolve({ enabled: false }),
   };
 }
 

@@ -26,6 +26,11 @@ declare global {
 
       // Models
       listModels: () => Promise<any[]>;
+
+      // Auto-refresh sessions
+      startAutoRefresh: (intervalMinutes?: number) => Promise<boolean>;
+      stopAutoRefresh: () => Promise<boolean>;
+      getAutoRefreshStatus: () => Promise<{ enabled: boolean }>;
     };
   }
 }
