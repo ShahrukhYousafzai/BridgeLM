@@ -1,0 +1,60 @@
+{
+  "name": "bridgelm",
+  "version": "1.0.0",
+  "description": "BridgeLM — Turn free AI platforms into OpenAI-compatible API",
+  "type": "module",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
+    "dev:main": "tsx watch src/main/index.ts",
+    "dev:renderer": "vite dev --config renderer/vite.config.ts",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsdown src/main/index.ts src/gateway/*.ts src/providers/**/*.ts src/browser/*.ts src/config/*.ts --out-dir dist --format esm --target node22 --platform node --clean",
+    "build:renderer": "vite build --config renderer/vite.config.ts",
+    "start": "electron dist/main/index.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.2",
+    "express": "^5.1.0",
+    "playwright-core": "1.52.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.0",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "concurrently": "^9.1.0",
+    "electron": "^35.7.5",
+    "electron-builder": "^26.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0",
+    "tsdown": "^0.12.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vite": "^6.3.0"
+  },
+  "build": {
+    "appId": "com.free-ai-gateway.app",
+    "productName": "BridgeLM",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "renderer/dist/**/*",
+      "package.json"
+    ],
+    "extraResources": []
+  }
+}

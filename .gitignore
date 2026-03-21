@@ -1,0 +1,15 @@
+node_modules/
+dist/
+renderer/dist/
+renderer/node_modules/
+*.log
+.DS_Store
+Thumbs.db
+.env
+*.local
+openclaw-state/
+.release/
+coverage/
+*.tgz
+*.tar.gz
+electron-builder.yml.lock
