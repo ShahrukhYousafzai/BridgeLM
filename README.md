@@ -6,6 +6,12 @@
 
 **Turn 11 free AI web platforms into a local OpenAI-compatible API — zero API costs, fully automatic.**
 
+## 🚧 Still in Development
+
+> This project is under active development. Features may change, break, or be incomplete. Use at your own risk.
+
+---
+
 ![Electron](https://img.shields.io/badge/Electron-35-blue)
 ![React](https://img.shields.io/badge/React-19-61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)
