@@ -45,7 +45,7 @@
     "vite": "^6.3.0"
   },
   "build": {
-    "appId": "com.free-ai-gateway.app",
+    "appId": "com.bridgelm.app",
     "productName": "BridgeLM",
     "directories": {
       "output": "release"

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="renderer/public/logo.png" alt="BridgeLM Logo" width="200">
+</p>
+
 # BridgeLM
 
 **Turn 11 free AI web platforms into a local OpenAI-compatible API — zero API costs, fully automatic.**
@@ -175,8 +179,8 @@ You need a **free account** on each AI platform you want to use:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/free-ai-gateway.git
-cd free-ai-gateway
+git clone https://github.com/ShahrukhYousafzai/BridgeLM.git
+cd BridgeLM
 ```
 
 ### 2. Install Dependencies
@@ -393,7 +397,7 @@ data: [DONE]
 ## Project Structure
 
 ```
-free-ai-gateway/
+BridgeLM/
 ├── src/
 │   ├── main/                          # Electron main process
 │   │   ├── index.ts                   # App entry, IPC handlers, gateway startup

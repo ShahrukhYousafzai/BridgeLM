@@ -73,7 +73,7 @@ export function killChromeOnPort(port: number): void {
 
 export async function launchChrome(options: ChromeLaunchOptions = {}): Promise<{ port: number; process: ChildProcess; wsUrl: string }> {
   const port = options.port || 18892;
-  const userDataDir = options.userDataDir || path.join(os.tmpdir(), 'free-ai-gateway-chrome');
+  const userDataDir = options.userDataDir || path.join(os.tmpdir(), 'bridgelm-chrome');
 
   // Kill existing Chrome on port
   if (isPortInUse(port)) {

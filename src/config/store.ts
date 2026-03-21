@@ -28,12 +28,12 @@ function generateApiKey(): string {
 }
 
 function getConfigPath(): string {
-  const userDataPath = app?.getPath('userData') || path.join(process.env.HOME || '.', '.free-ai-gateway');
+  const userDataPath = app?.getPath('userData') || path.join(process.env.HOME || '.', '.bridgelm');
   return path.join(userDataPath, 'config.json');
 }
 
 function getCredentialsDir(): string {
-  const userDataPath = app?.getPath('userData') || path.join(process.env.HOME || '.', '.free-ai-gateway');
+  const userDataPath = app?.getPath('userData') || path.join(process.env.HOME || '.', '.bridgelm');
   const dir = path.join(userDataPath, 'credentials');
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
