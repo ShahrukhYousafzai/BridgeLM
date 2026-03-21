@@ -33,7 +33,6 @@ BridgeLM is a desktop application that automatically captures browser session co
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Reference](#api-reference)
-- [Project Structure](#project-structure)
 - [Things Done](#things-done)
 - [Limitations](#limitations)
 - [Credits](#credits)
@@ -396,60 +395,6 @@ data: {"id":"chatcmpl-abc123","object":"chat.completion.chunk","created":1710000
 data: {"id":"chatcmpl-abc123","object":"chat.completion.chunk","created":1710000000,"model":"deepseek/deepseek-chat","choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
 
 data: [DONE]
-```
-
----
-
-## Project Structure
-
-```
-BridgeLM/
-├── src/
-│   ├── main/                          # Electron main process
-│   │   ├── index.ts                   # App entry, IPC handlers, gateway startup
-│   │   └── preload.ts                 # Preload script (exposes window.api)
-│   ├── gateway/
-│   │   ├── server.ts                  # Express server (OpenAI-compatible API)
-│   │   ├── types.ts                   # TypeScript types for API requests/responses
-│   │   └── provider-manager.ts        # Provider registry, routing, model listing
-│   ├── providers/
-│   │   ├── common.ts                  # Shared helpers (response builders, SSE parser)
-│   │   ├── deepseek/                  # DeepSeek: PoW challenge + web API
-│   │   │   ├── auth.ts                # Auto-login: cookie capture + validation
-│   │   │   ├── client.ts              # API client: chat + streaming
-│   │   │   └── index.ts               # AIProvider implementation
-│   │   ├── claude/                    # Claude: sessionKey + GraphQL API
-│   │   ├── chatgpt/                   # ChatGPT: session token + backend API
-│   │   ├── gemini/                    # Gemini: Google cookies + Bard RPC
-│   │   ├── grok/                      # Grok: x.com cookies + REST API
-│   │   ├── kimi/                      # Kimi: Moonshot cookies + API
-│   │   ├── qwen/                      # Qwen International: cookie-based
-│   │   ├── qwen-cn/                   # Qwen China: cookie-based
-│   │   ├── glm/                       # GLM (智谱清言): cookie + bearer
-│   │   ├── glm-intl/                  # GLM International: cookie + bearer
-│   │   ├── doubao/                    # Doubao: ByteDance cookie API
-│   ├── browser/
-│   │   ├── auto-login.ts              # Playwright CDP auto-capture engine
-│   │   └── chrome.ts                  # Chrome launcher, port detection
-│   └── config/
-│       └── store.ts                   # JSON config persistence
-├── renderer/
-│   ├── index.html                     # Entry HTML
-│   ├── vite.config.ts                 # Vite dev server config
-│   ├── tsconfig.json                  # Renderer TypeScript config
-│   └── src/
-│       ├── main.tsx                   # React entry + fallback API
-│       ├── App.tsx                    # Main app (tabs, header, snackbar)
-│       ├── types.d.ts                 # Window.api type declarations
-│       ├── components/
-│       │   ├── Dashboard.tsx          # 12 provider cards + Connect buttons
-│       │   └── ApiSettings.tsx        # Port, API key, cURL examples
-│       ├── hooks/                     # (reserved for future hooks)
-│       └── theme/
-│           └── theme.ts               # MUI dark theme config
-├── package.json                       # Dependencies & scripts
-├── tsconfig.json                      # Root TypeScript config
-└── README.md                          # This file
 ```
 
 ---
