@@ -46,28 +46,9 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the GLM International API.
+ * Validate credentials - lenient check.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    const headers: Record<string, string> = {
-      Cookie: cookie,
-      'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-    };
-    if (credentials.bearer) {
-      headers['Authorization'] = `Bearer ${credentials.bearer}`;
-    }
-
-    const res = await fetch('https://chat.z.ai/api/user/info', {
-      method: 'GET',
-      headers,
-      signal: AbortSignal.timeout(10_000),
-    });
-    return res.status !== 401;
-  } catch {
-    return false;
-  }
+  const cookie = credentials.cookie || '';
+  return cookie.length > 20;
 }

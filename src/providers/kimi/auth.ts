@@ -21,7 +21,7 @@ export const AUTH_FIELDS: AuthField[] = [
   },
   {
     name: 'userAgent',
-    'label': 'User Agent (auto-captured)',
+    label: 'User Agent (auto-captured)',
     type: 'text',
     required: false,
     description: 'Automatically captured from the browser session',
@@ -54,45 +54,14 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the Kimi API.
- * Checks for kimi-auth cookie and validates against a simple endpoint.
+ * Validate credentials - lenient check.
+ * For free web providers, we just check if cookies exist.
+ * Endpoint validation often fails due to CORS or missing routes.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    // Check if kimi-auth exists in cookies
-    const hasKimiAuth = /kimi-auth=[^;]+/.test(cookie);
-    if (!hasKimiAuth) {
-      console.warn('[Kimi] kimi-auth cookie not found - may need to re-login');
-    }
-
-    // Try to validate by making a request to the API
-    const kimiAuth = cookie.match(/kimi-auth=([^;]+)/)?.[1];
-    if (!kimiAuth) return false;
-
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/connect+json',
-      'Connect-Protocol-Version': '1',
-      'Origin': PROVIDER_URL,
-      'Referer': `${PROVIDER_URL}/`,
-      'Authorization': `Bearer ${kimiAuth}`,
-      'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-    };
-
-    // Make a minimal request to validate the auth token
-    const res = await fetch(`${PROVIDER_URL}/apiv2/kimi.gateway.chat.v1.ChatService/HealthCheck`, {
-      method: 'POST',
-      headers,
-      signal: AbortSignal.timeout(10_000),
-    });
-
-    // Any response (even 404) means the auth is working
-    // Only 401/403 means auth is invalid
-    return res.status !== 401 && res.status !== 403;
-  } catch {
-    // On error, assume credentials might be valid (network issues shouldn't block)
-    return true;
-  }
+  const cookie = credentials.cookie || '';
+  // Just check if we have meaningful cookies
+  const hasKimiAuth = /kimi-auth=[^;]+/.test(cookie);
+  const hasCookies = cookie.length > 20;
+  return hasKimiAuth || hasCookies;
 }

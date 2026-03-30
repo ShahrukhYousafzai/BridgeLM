@@ -15,12 +15,23 @@ import { v4 as uuidv4 } from 'uuid';
 const API_URL = 'https://www.kimi.com/apiv2/kimi.gateway.chat.v1.ChatService/Chat';
 
 /**
- * Extract kimi-auth token from cookie string.
- * This is the authentication token Kimi uses for its internal API.
+ * Extract auth token from cookie string.
+ * Tries multiple cookie names: kimi-auth, access_token, token
  */
-function extractKimiAuth(cookie: string): string | null {
-  const match = cookie.match(/kimi-auth=([^;]+)/);
-  return match ? match[1] : null;
+function extractAuthCookie(cookie: string): string | null {
+  // Try kimi-auth first
+  let match = cookie.match(/kimi-auth=([^;]+)/);
+  if (match) return match[1];
+  
+  // Try access_token
+  match = cookie.match(/access_token=([^;]+)/);
+  if (match) return match[1];
+  
+  // Try token
+  match = cookie.match(/(?:^|;\s*)token=([^;]+)/);
+  if (match) return match[1];
+  
+  return null;
 }
 
 /**
@@ -112,27 +123,32 @@ export async function kimiChat(
     || messages.map(m => m.content).join('\n');
   const scenario = getScenario(model);
 
-  // Extract kimi-auth from cookies
-  const kimiAuth = extractKimiAuth(credentials.cookie || '');
-  if (!kimiAuth) {
-    throw new Error('Kimi: kimi-auth cookie not found. Please login to www.kimi.com first.');
+  // Extract auth token from cookies
+  const authToken = extractAuthCookie(credentials.cookie || '');
+  
+  // Build headers - try with auth token if available, otherwise use cookies only
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/connect+json',
+    'Connect-Protocol-Version': '1',
+    'Accept': '*/*',
+    'Origin': 'https://www.kimi.com',
+    'Referer': 'https://www.kimi.com/',
+    'X-Language': 'zh-CN',
+    'X-Msh-Platform': 'web',
+    'Cookie': credentials.cookie || '',
+    'User-Agent': (credentials.userAgent as string) || DEFAULT_USER_AGENT,
+  };
+  
+  // Add Authorization header if we have a token
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
   }
 
   const body = encodeConnectRequest(userMessage as string, scenario);
 
   const res = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/connect+json',
-      'Connect-Protocol-Version': '1',
-      'Accept': '*/*',
-      'Origin': 'https://www.kimi.com',
-      'Referer': 'https://www.kimi.com/',
-      'X-Language': 'zh-CN',
-      'X-Msh-Platform': 'web',
-      'Authorization': `Bearer ${kimiAuth}`,
-      'User-Agent': (credentials.userAgent as string) || DEFAULT_USER_AGENT,
-    },
+    headers,
     body: body,
     signal,
   });

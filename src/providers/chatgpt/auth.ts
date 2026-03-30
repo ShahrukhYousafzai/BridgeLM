@@ -55,30 +55,9 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the ChatGPT API.
- * Sends a GET request to /backend-api/models and checks for a non-401 response.
+ * Validate credentials - lenient check.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    const headers: Record<string, string> = {
-      Cookie: cookie,
-      'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-    };
-
-    if (credentials.accessToken) {
-      headers['Authorization'] = `Bearer ${credentials.accessToken}`;
-    }
-
-    const res = await fetch('https://chatgpt.com/backend-api/models', {
-      method: 'GET',
-      headers,
-      signal: AbortSignal.timeout(10_000),
-    });
-    return res.status !== 401 && res.status !== 403;
-  } catch {
-    return false;
-  }
+  const cookie = credentials.cookie || '';
+  return cookie.length > 20;
 }

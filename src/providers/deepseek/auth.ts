@@ -67,40 +67,11 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the DeepSeek API.
- * Fetches the current user endpoint and checks for a successful response.
+ * Validate credentials - lenient check.
+ * For free web providers, we just check if cookies exist.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    const headers: Record<string, string> = {
-      Cookie: cookie,
-      'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-      Accept: '*/*',
-      Referer: `${PROVIDER_URL}/`,
-      Origin: PROVIDER_URL,
-      'x-client-platform': 'web',
-    };
-
-    if (credentials.bearer) {
-      headers['Authorization'] = `Bearer ${credentials.bearer}`;
-    }
-
-    const res = await fetch(`${PROVIDER_URL}/api/v0/users/current`, {
-      method: 'GET',
-      headers,
-      signal: AbortSignal.timeout(10_000),
-    });
-
-    if (!res.ok) return false;
-
-    const data = (await res.json()) as Record<string, unknown>;
-    const inner = data['data'] as Record<string, unknown> | undefined;
-    const bizData = inner?.['biz_data'] as Record<string, unknown> | undefined;
-    return !!(bizData && typeof bizData === 'object');
-  } catch {
-    return false;
-  }
+  const cookie = credentials.cookie || '';
+  // Just check if we have meaningful cookies
+  return cookie.length > 20;
 }

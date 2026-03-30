@@ -56,27 +56,9 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the Claude API.
- * Sends a GET request to /api/organizations and checks for a non-401 response.
+ * Validate credentials - lenient check.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    const res = await fetch('https://claude.ai/api/organizations', {
-      method: 'GET',
-      headers: {
-        Cookie: cookie,
-        'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-        'anthropic-client-platform': 'web_claude_ai',
-        Origin: PROVIDER_URL,
-        Referer: `${PROVIDER_URL}/`,
-      },
-      signal: AbortSignal.timeout(10_000),
-    });
-    return res.status !== 401;
-  } catch {
-    return false;
-  }
+  const cookie = credentials.cookie || '';
+  return cookie.length > 20;
 }

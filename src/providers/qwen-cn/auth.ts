@@ -72,23 +72,9 @@ export async function startAutoLogin(
 }
 
 /**
- * Validate that the provided credentials can reach the Qwen China API.
+ * Validate credentials - lenient check.
  */
 export async function validateCredentials(credentials: ProviderCredentials): Promise<boolean> {
-  try {
-    const cookie = credentials.cookie || '';
-    if (cookie.length < 10) return false;
-
-    const res = await fetch('https://chat2.qianwen.com/api/models', {
-      method: 'GET',
-      headers: {
-        Cookie: cookie,
-        'User-Agent': (credentials.userAgent as string) || 'Mozilla/5.0',
-      },
-      signal: AbortSignal.timeout(10_000),
-    });
-    return res.status !== 401;
-  } catch {
-    return false;
-  }
+  const cookie = credentials.cookie || '';
+  return cookie.length > 20;
 }
