@@ -9,7 +9,7 @@
     "dev:main": "tsx watch src/main/index.ts",
     "dev:renderer": "vite dev --config renderer/vite.config.ts",
     "build": "npm run build:main && npm run build:renderer",
-    "build:main": "tsdown src/main/index.ts src/gateway/*.ts src/providers/**/*.ts src/browser/*.ts src/config/*.ts --out-dir dist --format esm --target node22 --platform node --clean",
+    "build:main": "tsdown src/main/index.ts src/gateway/*.ts src/providers/**/*.ts src/browser/*.ts src/config/*.ts --out-dir dist --format esm --target node22 --platform node --clean --external electron --external playwright-core --external better-sqlite3 --external express && tsdown src/main/preload.ts --out-dir dist/main --format cjs --platform node --external electron --no-clean && mv dist/main/preload.cjs dist/main/preload.js",
     "build:renderer": "vite build --config renderer/vite.config.ts",
     "start": "electron dist/main/index.js",
     "pack": "electron-builder --dir",
@@ -53,8 +53,35 @@
     "files": [
       "dist/**/*",
       "renderer/dist/**/*",
-      "package.json"
+      "package.json",
+      "!node_modules/**/{CHANGELOG,README,readme,LICENSE,license,*.md,*.txt}",
+      "!node_modules/**/{test,__tests__,tests,spec,examples,example}",
+      "!node_modules/**/.{github,gitignore,npmignore}"
     ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64"]
+        },
+        {
+          "target": "dir",
+          "arch": ["arm64"]
+        }
+      ],
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "BridgeLM",
+      "icon": "assets/icon.icns",
+      "contents": [
+        { "x": 130, "y": 220 },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    },
     "extraResources": []
   }
 }

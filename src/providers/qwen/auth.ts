@@ -38,8 +38,21 @@ export async function startAutoLogin(
   return autoLogin({
     providerId: 'qwen',
     loginUrl: PROVIDER_URL,
-    detectLogin: async (cookies) => {
-      return cookies.length > 2;
+    detectLogin: async (cookies, page, url) => {
+      // Check for Qwen-specific session cookies on chat.qwen.ai domain
+      const qwenSessionCookies = cookies.filter(c =>
+        c.name === 'token' ||
+        c.name === 'session' ||
+        c.name === 'auth_token' ||
+        c.name.startsWith('qwen_') ||
+        c.name.startsWith('_tb_token_') ||
+        c.name.startsWith('EGG_SESS') ||
+        (c.value.length > 50 && c.name.length > 3)
+      );
+      // Must have meaningful cookies AND be on chat.qwen.ai (not redirected to qianwen.com)
+      const currentHost = (() => { try { return new URL(url).hostname; } catch { return ''; } })();
+      const onCorrectDomain = currentHost.includes('chat.qwen.ai') || currentHost.includes('qwen.ai');
+      return qwenSessionCookies.length >= 1 && onCorrectDomain;
     },
     onProgress,
   });

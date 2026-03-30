@@ -13,7 +13,7 @@ import { kimiChat, kimiChatStream } from './client';
 export const KIMI_INFO: ProviderInfo = {
   id: 'kimi',
   name: 'Kimi (Moonshot)',
-  url: 'https://kimi.moonshot.cn',
+  url: 'https://www.kimi.com',
   authFields: AUTH_FIELDS,
   models: [
     {

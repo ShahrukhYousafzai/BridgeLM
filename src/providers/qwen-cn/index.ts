@@ -25,6 +25,12 @@ const MODELS: ProviderModel[] = [
     contextWindow: 131_072,
     maxTokens: 16_384,
   },
+  {
+    id: 'qwen3.5-flash',
+    name: 'Qwen 3.5 Flash',
+    contextWindow: 131_072,
+    maxTokens: 16_384,
+  },
 ];
 
 export class QwenCNProvider implements AIProvider {
@@ -34,7 +40,7 @@ export class QwenCNProvider implements AIProvider {
     id: 'qwen-cn',
     name: 'Qwen China (千问)',
     models: MODELS,
-    url: 'https://www.qianwen.com',
+    url: 'https://chat2.qianwen.com',
     authFields: AUTH_FIELDS,
   };
 

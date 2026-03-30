@@ -13,7 +13,8 @@ import {
 } from '../common';
 import { v4 as uuidv4 } from 'uuid';
 
-const API_URL = 'https://www.qianwen.com/api/chat/completions';
+const BASE_URL = 'https://chat2.qianwen.com';
+const API_URL = `${BASE_URL}/api/chat/completions`;
 
 /**
  * Send a non-streaming chat request to Qwen China (千问).
@@ -39,8 +40,8 @@ export async function chatQwenCn(
       'Content-Type': 'application/json',
       'Cookie': credentials.cookie,
       'User-Agent': credentials.userAgent || DEFAULT_USER_AGENT,
-      'Referer': 'https://www.qianwen.com/',
-      'Origin': 'https://www.qianwen.com',
+      'Referer': `${BASE_URL}/`,
+      'Origin': BASE_URL,
     },
     body: JSON.stringify(body),
     signal,
@@ -109,8 +110,8 @@ export async function chatStreamQwenCn(
       'Content-Type': 'application/json',
       'Cookie': credentials.cookie,
       'User-Agent': credentials.userAgent || DEFAULT_USER_AGENT,
-      'Referer': 'https://www.qianwen.com/',
-      'Origin': 'https://www.qianwen.com',
+      'Referer': `${BASE_URL}/`,
+      'Origin': BASE_URL,
     },
     body: JSON.stringify(body),
     signal,

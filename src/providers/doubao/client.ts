@@ -13,7 +13,7 @@ import {
 } from '../common';
 import { v4 as uuidv4 } from 'uuid';
 
-const API_URL = 'https://www.doubao.com/api/chat/completions';
+const API_URL = 'https://www.doubao.com/samantha/chat/completion';
 
 /**
  * Send a non-streaming chat completion request to Doubao.
@@ -43,6 +43,7 @@ export async function doubaoChat(
       'User-Agent': credentials.userAgent || DEFAULT_USER_AGENT,
       'Origin': 'https://www.doubao.com',
       'Referer': 'https://www.doubao.com/chat/',
+      'Agw-js-conv': 'str',
     },
     body: JSON.stringify(body),
     signal,
@@ -99,6 +100,7 @@ export async function doubaoChatStream(
       'User-Agent': credentials.userAgent || DEFAULT_USER_AGENT,
       'Origin': 'https://www.doubao.com',
       'Referer': 'https://www.doubao.com/chat/',
+      'Agw-js-conv': 'str',
     },
     body: JSON.stringify(body),
     signal,

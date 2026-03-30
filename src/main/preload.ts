@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-contextBridge.exposeInMainWorld('api', {
+const api = {
   // Config
   getConfig: () => ipcRenderer.invoke('config:get'),
   getPort: () => ipcRenderer.invoke('config:getPort'),
@@ -37,4 +37,12 @@ contextBridge.exposeInMainWorld('api', {
   startAutoRefresh: (intervalMinutes?: number) => ipcRenderer.invoke('auth:startAutoRefresh', intervalMinutes),
   stopAutoRefresh: () => ipcRenderer.invoke('auth:stopAutoRefresh'),
   getAutoRefreshStatus: () => ipcRenderer.invoke('auth:getAutoRefreshStatus'),
-});
+};
+
+// Support both contextIsolation=true and contextIsolation=false
+try {
+  contextBridge.exposeInMainWorld('api', api);
+} catch {
+  // contextIsolation is false — assign directly to renderer global
+  (globalThis as any).api = api;
+}

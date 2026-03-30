@@ -13,3 +13,4 @@ coverage/
 *.tgz
 *.tar.gz
 electron-builder.yml.lock
+/release
